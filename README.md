@@ -75,3 +75,32 @@ ORDER BY ROUND(avg(danceability)) desc limit 10;
 #0.74725	Bad Bunny	DÁKITI	87
 #0.61366666666667	Bruno Mars	Leave The Door Open	86
 #0.746	The Kid LAROI	WITHOUT YOU	85
+
+--Calculate the average popularity for the artists in the Spotify data table. 
+--Then, for every artist with an average popularity of 90 or above, 
+--show their name, their average popularity, and label them as a “Top Star”
+
+WITH popularity_average_CTE AS (
+SELECT s.artist_name,
+AVG(s.popularity) AS average_popularity
+FROM SpotifyData s 
+GROUP BY s.artist_name
+)
+ 
+SELECT  artist_name,
+        average_popularity,
+        'Top Star' AS tag
+FROM popularity_average_CTE
+WHERE average_popularity>=90;
+
+#Ed Sheeran	95	Top Star
+#Glass Animals	94	Top Star
+#Harry Styles	90	Top Star
+#Justin Bieber	90	Top Star
+#Lil Nas X	90	Top Star
+#Måneskin	90.5	Top Star
+#Olivia Rodrigo	92.25	Top Star
+#The Neighbourhood	92	Top Star
+#The Weeknd	91.5	Top Star
+
+
